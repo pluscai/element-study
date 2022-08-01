@@ -193,20 +193,20 @@
     methods: {
       validate(trigger, callback = noop) {
         this.validateDisabled = false;
-        const rules = this.getFilteredRule(trigger);
+        const rules = this.getFilteredRule(trigger); // 得到rules数组
         if ((!rules || rules.length === 0) && this.required === undefined) {
           callback();
           return true;
         }
 
         this.validateState = 'validating';
-
         const descriptor = {};
         if (rules && rules.length > 0) {
           rules.forEach(rule => {
             delete rule.trigger;
           });
         }
+
         descriptor[this.prop] = rules;
 
         const validator = new AsyncValidator(descriptor);
@@ -217,9 +217,8 @@
         validator.validate(model, { firstFields: true }, (errors, invalidFields) => {
           this.validateState = !errors ? 'success' : 'error';
           this.validateMessage = errors ? errors[0].message : '';
-
           callback(this.validateMessage, invalidFields);
-          this.elForm && this.elForm.$emit('validate', this.prop, !errors, this.validateMessage || null);
+          this.elForm && this.elForm.$emit('validate', this.prop, !errors, this.validateMessage || null); // todo cc 这句话没用吗
         });
       },
       clearValidate() {
@@ -260,13 +259,16 @@
         const requiredRule = this.required !== undefined ? { required: !!this.required } : [];
 
         const prop = getPropByPath(formRules, this.prop || '');
+        // prop : o: forumRules   k: 'name'   v: [3个对象]
         formRules = formRules ? (prop.o[this.prop || ''] || prop.v) : [];
+
+        console.log('formRules===', formRules);
 
         return [].concat(selfRules || formRules || []).concat(requiredRule);
       },
       getFilteredRule(trigger) {
         const rules = this.getRules();
-
+        console.log('el-getFilteredRule==', rules);
         return rules.filter(rule => {
           if (!rule.trigger || trigger === '') return true;
           if (Array.isArray(rule.trigger)) {

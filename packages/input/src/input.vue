@@ -264,6 +264,7 @@
         this.$nextTick(this.resizeTextarea);
         if (this.validateEvent) {
           this.dispatch('ElFormItem', 'el.form.change', [val]);
+          this.dispatch('SxFormItem', 'el.form.change', [val]);
         }
       },
       // native input value is set explicitly
@@ -307,6 +308,7 @@
         this.$emit('blur', event);
         if (this.validateEvent) {
           this.dispatch('ElFormItem', 'el.form.blur', [this.value]);
+          this.dispatch('SxFormItem', 'el.form.blur', [this.value]);
         }
       },
       select() {

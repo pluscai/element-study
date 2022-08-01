@@ -107,6 +107,7 @@
         });
       },
       validate(callback) {
+
         if (!this.model) {
           console.warn('[Element Warn][Form]model is required for validate to work!');
           return;
