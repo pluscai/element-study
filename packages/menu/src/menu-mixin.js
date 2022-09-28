@@ -33,6 +33,7 @@ export default {
       } else {
         while (parent && parent.$options.componentName !== 'ElMenu') {
           if (parent.$options.componentName === 'ElSubmenu') {
+            // 每碰到一个ElSubmenu，padding-left就加20，直到遍历到 顶级 ElMenu停下来
             padding += 20;
           }
           parent = parent.$parent;

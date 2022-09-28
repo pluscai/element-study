@@ -6,7 +6,20 @@
   "plugins": ["html", "json"],
   "extends": "elemefe",
   "rules": {
-    "no-restricted-globals": ["error", "event", "fdescribe"]
+    "no-restricted-globals": ["error", "event", "fdescribe"],
+    "no-trailing-spaces": 0,
+    "quotes": 0,
+    "comma-spacing": 0,
+    "semi": 0,
+    "no-debugger": 0,
+    "spaced-comment": 0,
+    "indent": 0,
+    "comma-dangle": 0,
+    "eol-last": 0,
+    "space-before-function-paren": 0,
+    "keyword-spacing": 0,
+    "space-in-parens": 0,
+    "no-unused-vars": 0
   },
   "parserOptions": {
     "ecmaVersion": 6,

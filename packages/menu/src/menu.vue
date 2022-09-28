@@ -38,7 +38,7 @@
 
     mixins: [emitter, Migrating],
 
-    provide() {
+    provide() { // cc 父组件中传递响应式数据，供子孙组件消费
       return {
         rootMenu: this
       };

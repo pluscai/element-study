@@ -64,13 +64,10 @@ const attributes = {
 const getScrollOptions = (el, vm) => {
   if (!isHtmlElement(el)) return {};
 
-  console.log("entries(attributes)==",entries(attributes));
-  console.log("el===",el)
   return entries(attributes).reduce((map, [key, option]) => {
     const { type, default: defaultValue } = option;
     let value = el.getAttribute(`infinite-scroll-${key}`);
     value = isUndefined(vm[value]) ? value : vm[value];
-    // debugger
     switch (type) {
       case Number:
         value = Number(value);
@@ -101,24 +98,19 @@ const handleScroll = function(cb) {
   let shouldTrigger = false;
 
   if (container === el) {
-    // 情况1
     // be aware of difference between clientHeight & offsetHeight & window.getComputedStyle().height
     const scrollBottom = container.scrollTop + getClientHeight(container);
-    shouldTrigger = container.scrollHeight - scrollBottom <= distance; //true
+    shouldTrigger = container.scrollHeight - scrollBottom <= distance;
   } else {
-    // 情况2
     const heightBelowTop = getOffsetHeight(el) + getElementTop(el) - getElementTop(container);
     const offsetHeight = getOffsetHeight(container);
-    const borderBottom = Number.parseFloat(getStyleComputedProperty(container, 'borderBottomWidth')); // 1
-    shouldTrigger = heightBelowTop - offsetHeight + borderBottom <= distance; // true
+    const borderBottom = Number.parseFloat(getStyleComputedProperty(container, 'borderBottomWidth'));
+    shouldTrigger = heightBelowTop - offsetHeight + borderBottom <= distance;
   }
-
-  console.log("shouldTrigger==",shouldTrigger)
 
   if (shouldTrigger && isFunction(cb)) {
     cb.call(vm);
   } else if (observer) {
-    console.log("dfdfdf==========")
     observer.disconnect();
     this[scope].observer = null;
   }
@@ -126,19 +118,16 @@ const handleScroll = function(cb) {
 };
 
 export default {
-  name: 'InfiniteScroll',
-  inserted(el, binding, vnode) { 
-    // el:指令所绑定的元素，可以用来直接操作 DOM。在这里是 ul
-    // value: 指令的绑定值，例如：v-my-directive="1 + 1" 中，绑定值为 2。
-    const cb = binding.value; // load2函数
+  name: 'InfiniteScroll2',
+  inserted(el, binding, vnode) {
+    debugger;
+    const cb = binding.value;
 
-    const vm = vnode.context; // 得到指令使用时所在的组件
-
+    const vm = vnode.context;
     // only include vertical scroll
-    const container = getScrollContainer(el, true); // 得到需要滚动的 ul
-
+    const container = getScrollContainer(el, true);
+    
     const { delay, immediate } = getScrollOptions(el, vm);
-
     const onScroll = throttle(delay, handleScroll.bind(el, cb));
 
     el[scope] = { el, vm, container, onScroll };

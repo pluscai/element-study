@@ -66,7 +66,7 @@ class Transition {
 
 export default {
   name: 'ElCollapseTransition',
-  functional: true,
+  functional: true, // 函数式组件
   render(h, { children }) {
     const data = {
       on: new Transition()
