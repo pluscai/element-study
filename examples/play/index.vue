@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value1" multiple placeholder="请选择" @change="handleChage">
+    <el-select v-model="value1" placeholder="请选择" @change="handleChage">
       <el-option
         v-for="item in options"
         :key="item.value"
@@ -11,12 +11,7 @@
 
     <hr>
     <sx-select>
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
+      
     </sx-select>
   <button @click="handleClick">设置</button>
   </div>
