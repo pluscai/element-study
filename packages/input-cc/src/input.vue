@@ -8,7 +8,7 @@
   >
     <input
         ref="input"
-        type="text"
+        :type="showPassword ? (passwordVisible ? 'text' : 'password') : type"
         class="el-input__inner"
         v-bind="$attrs"
         :disabled="inputDisabled"
@@ -27,6 +27,11 @@
             @mousedown.prevent
             @click="clear"
             ></i>
+
+        <i v-if="showPwdVisible"
+            class="el-input__icon el-icon-view el-input__clear"
+            @click="handlePasswordVisible"
+          ></i>
       </span>
     </span>
    
@@ -43,6 +48,14 @@ export default {
     clearable: {
       type: Boolean,
       default: false
+    },
+    showPassword: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: 'text'
     }
   },
   mounted () {
@@ -52,7 +65,8 @@ export default {
     return {
       // inputDisabled: true
       focused: false,
-      hovering: false
+      hovering: false,
+      passwordVisible: false
     };
   },
   inject: {
